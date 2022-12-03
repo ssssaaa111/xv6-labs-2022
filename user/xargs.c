@@ -14,9 +14,10 @@ int main(int argc, char **argv)
     int args_index = 0;
     int i;
     char *cmd = argv[1];
-    for (int i = 0; i < argc; i++)
+    for (int i = 0; i < argc-1; i++)
     {
-        params[i] = argv[i + 1];
+        printf("arg %d is:%s \n", args_index, argv[i+1]);
+        params[args_index++] = argv[i + 1];
     }
     // printf("size of char * is %d\n", sizeof(line));
     // printf("size of char * is %d", (int)'\0');
@@ -30,7 +31,8 @@ int main(int argc, char **argv)
         {
 
             printf("line is:%s \n", line);
-            params[args_index++] = cmd;
+            printf("n is:%d \n", n);
+            // params[args_index++] = cmd;
             char *arg = (char*) malloc(sizeof(line));
             int index = 0;
             for (i = 0; i < n; i++)
@@ -38,6 +40,7 @@ int main(int argc, char **argv)
                 if (line[i] == ' ' || line[i] == '\n')
                 {
                     arg[index] = 0;
+                    printf("arg %d is:%s \n", args_index, arg);
                     params[args_index++] = arg;
                     index = 0;
                     arg = (char*) malloc(sizeof(line));
