@@ -162,7 +162,6 @@ found:
 static void
 freeproc(struct proc *p)
 {
-  printf("freeproc \n");
   if(p->trapframe)
     kfree((void*)p->trapframe);
   if (p->usyscall)
@@ -218,12 +217,10 @@ proc_pagetable(struct proc *p)
               // (uint64)(p->usyscall), PTE_R | PTE_W | PTE_U) < 0){
               (uint64)(p->usyscall), PTE_R | PTE_W | PTE_U| PTE_X) < 0){
     // uvmunmap(pagetable, TRAMPOLINE, 1, 0);
-    printf("1111\n");
     uvmunmap(pagetable, USYSCALL, 1, 0);
     uvmfree(pagetable, 0);
     return 0;
   }
-  printf("2222, pid=%d\n", p->pid);
 
   return pagetable;
 }
@@ -233,9 +230,9 @@ proc_pagetable(struct proc *p)
 void
 proc_freepagetable(pagetable_t pagetable, uint64 sz)
 {
-  printf("proc_freepagetable \n");
   uvmunmap(pagetable, TRAMPOLINE, 1, 0);
   uvmunmap(pagetable, TRAPFRAME, 1, 0);
+  uvmunmap(pagetable, USYSCALL, 1, 0);
   uvmfree(pagetable, sz);
 }
 
