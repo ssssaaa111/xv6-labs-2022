@@ -61,6 +61,7 @@ pgaccess_test()
   buf[PGSIZE * 1] += 1;
   buf[PGSIZE * 2] += 1;
   buf[PGSIZE * 30] += 1;
+  printf("pg1 %p, pg2 %p, pg3 %p\n", &buf[PGSIZE *1], &buf[PGSIZE *2], &buf[PGSIZE *3] );
   if (pgaccess(buf, 32, &abits) < 0)
     err("pgaccess failed");
   if (abits != ((1 << 1) | (1 << 2) | (1 << 30)))

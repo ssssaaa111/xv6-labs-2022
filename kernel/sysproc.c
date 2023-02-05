@@ -93,13 +93,14 @@ sys_pgaccess(void)
   vmprint(pagetable);
   for (int i = 0; i< n; i++)
   {
-    pte_t * p = walk(pagetable, buf_addr+i*4096, 0);
+    pte_t * p = walk(pagetable, buf_addr+i*PGSIZE, 0);
     if (p)
     {
-      if (*p | PTE_A)
+      if (*p & PTE_A)
       {
         abits = abits | (1<<i);
         // clean the access bit
+        printf("find the %d page\n", i);
         *p = *p & (~PTE_A);
       }
     }
